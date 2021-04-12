@@ -26,21 +26,22 @@ public class Regine {
 	//            [0, 2, 1]
 	
 	private int N;
-	private List<Integer> soluzione;
+	private List<List<Integer>> soluzioni;
 	
-	public List<Integer> risolvi(int N){  //procedura che attiva la chiamata alla procedura ricorsiva 
+	public List<List<Integer>> risolvi(int N){  //procedura che attiva la chiamata alla procedura ricorsiva 
 		this.N=N;
 		//caso iniziale
 		List<Integer> parziale= new ArrayList<Integer>();
-		this.soluzione=null;
+		this.soluzioni= new ArrayList<>();
 		cerca(parziale,0);
-		return this.soluzione;		
+		return this.soluzioni;		
 	}
 	
-	private boolean cerca(List<Integer>parziale, int livello) {
+	private void cerca(List<Integer>parziale, int livello) {
 		if(livello==N) {
-			this.soluzione=new ArrayList<>(parziale);  //this.soluzione.addAll(parziale);  è necessario perchè alla fine per via del backtracking parziale è sempre vuota
-			return true;
+			this.soluzioni.add(new ArrayList<>(parziale));
+			//this.soluzione=new ArrayList<>(parziale);  //this.soluzione.addAll(parziale);  è necessario perchè alla fine per via del backtracking parziale è sempre vuota
+			//return true;
 			// caso terminale
 		} else {
 			for(int colonna=0; colonna<N; colonna++) { //questo ciclo mi permette di fare più tentativi, quindi io provo tutte le posizioni possibili ma valide
@@ -50,13 +51,13 @@ public class Regine {
 				//aggiungo, provo, tolgo
 				if(posValida(parziale,colonna)) { //faccio ricorsione se la colonna in cui voglio inserire la regina è compatibile con quelle precedenti
 					parziale.add(colonna);  //ho aggiunto la colonna perchè rispetta tutti i vincoli
-					boolean trovato=cerca(parziale,livello+1); //vedo le conseguenze di aver messo la regina nella colonna sulle righe successive
-					if(trovato)
-						return true; //così facendo non va avanti a trovare altre soluzioni
+					/*boolean trovato=*/cerca(parziale,livello+1); //vedo le conseguenze di aver messo la regina nella colonna sulle righe successive
+					//if(trovato)
+					//	return true; //così facendo non va avanti a trovare altre soluzioni
 					parziale.remove(parziale.size()-1);  //backtracking, se il tentativo non va a buon fine con quella colonna, perciò riprovo con le altre colonne possibili finchè non trovo la soluzione finale
 				}
 			}
-			return false;
+			//return false;
 		}
 	}
 
